@@ -7,25 +7,25 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received No</label>
-                        <input type="number" class="form-control">
+                        <input type="number" class="form-control" id="input_area">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
-                        <input type="date" class="form-control">
+                        <input type="date" class="form-control" id="input_area" >
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">MRR No</label>
-                        <input type="number" class="form-control">
+                        <input type="number" class="form-control" id="input_area">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received By</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="input_area">
                     </div>
                     <div class="col-md-6">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Item Remarks</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="input_area">
                     </div>
                 </div>
                 <div class="card" id="receive_item_filds">
@@ -161,20 +161,19 @@ export default {
     margin-left: 8px;
     background-color: rgb(255, 255, 255);
     overflow: auto;
+    color: rgb(153, 153, 153);
 }
-
+#input_area{
+    border: none;
+    border-bottom: 1px solid rgb(46, 46, 46);
+    border-radius: 0 !important;
+}
 #receive_item_filds {
-    border: 1px solid rgb(179, 179, 179);
+    border-radius: 0 !important;
+    border: 1px solid rgb(218, 218, 218);
     padding: 10px;
     padding-top: -20px;
     margin-top: 30px;
-
-    /* width: 100%;
-    height: 280px;
-    overflow-y: scroll;
-    scrollbar-color: rebeccapurple green;
-    scrollbar-width: thin; */
-    /* font: 24px/36px sans-serif; */
     width: 100%;
     height: 280px;
     overflow-x: scroll;
@@ -184,17 +183,17 @@ export default {
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 0;
 }
 
-/* ::-webkit-scrollbar-track {
-    border: 1px solid yellowgreen;
+::-webkit-scrollbar-track {
+    border: 1px solid rgb(105, 105, 105);
     border-radius: 10px;
-} */
+}
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(95, 95, 95);
+    background: rgb(50, 148, 205);
     border-radius: 10px;
 }
 
@@ -218,19 +217,25 @@ export default {
 
 #receive_item_filds_row {
     margin: 8px;
+    
 }
 
 #receive_item_filds_action_group_col {
     text-align: center;
 }
 
-#receive_item_filds_action_group_add {
+/* #receive_item_filds_action_group_add {
     margin-top: 44px;
-}
+       
+} */
 
 #receive_item_filds_action_group {
     margin-top: 22px;
+
 }
+/* #receive_item_filds_action_group i {
+    font-size:16px;
+} */
 
 #submit_items_row {
     margin-top: 40px;
