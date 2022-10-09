@@ -44,8 +44,6 @@
                                 <th scope="col">Unit Type</th>
                                 <th scope="col">Received Quantity</th>
                                 <th scope="col">Remarks</th>
-                                <th scope="col">Action</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -68,18 +66,22 @@
                                 <td><input type="number" class="form-control" v-model="items.received_quantity"></td>
                                 <td><input type="text" class="form-control" v-model="items.remarks"></td>
                                 <td>
-                                    <button v-if="index!==0" class="btn btn-danger me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-x-octagon"></i></button>
-                                    <button class="btn btn-success me-md-2" type="button" @click="addRow"><i class="bi bi-plus-circle"></i></button>
+                                    <button v-if="index!==0" class="btn btn-danger me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-trash3"></i></button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button id="receive_item_filds_action_group" class="btn btn-success me-md-2" type="button" @click="addRow"><i class="bi bi-plus-circle"> Add More</i></button>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="row">
                 <div class="col-md-12" id="submit_items_row">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button id="submit_items" class="btn btn-primary me-md-2" @click="fainalSubmit(Received_No, item)" type="button">Button</button>
+                        <button id="submit_items" class="btn btn-primary me-md-2" @click="fainalSubmit(Received_No, item )" type="button">Button</button>
                     </div>
                 </div>
             </div>
@@ -127,8 +129,8 @@ export default {
         //             this.fetchData();
         //         });
         // },
-        fainalSubmit(Received_No,item) {
-            console.log(Received_No,item)
+        fainalSubmit(Received_No,a, b) {
+            console.log(Received_No,a, b)
         }
 
     },
@@ -139,7 +141,7 @@ export default {
                 received_quantity: "",
                 remarks: ""
             }]);
-            console.log(item.value)
+            // console.log(item.value)
         };
         const removeRow = (index) => {
             if (item.value.length > 1) {
@@ -196,10 +198,12 @@ export default {
     padding-top: -20px;
     margin-top: 30px;
     width: 100%;
-    height: 280px;
+    height: 300px;
     overflow-x: scroll;
 }
-
+.table{
+    border-color: rgb(255, 255, 255);
+}
 /* Scrollbar styles */
 ::-webkit-scrollbar {
     width: 8px;
@@ -249,13 +253,16 @@ export default {
 } */
 
 #receive_item_filds_action_group {
-    margin-top: 22px;
+   width: 100%;
+   margin-left: 5%;
+   background-color:rgb(68, 115, 204);
+   border: none;
 
 }
 
-/* #receive_item_filds_action_group i {
+#receive_item_filds_action_group i {
     font-size:16px;
-} */
+}
 
 #submit_items_row {
     margin-top: 40px;
