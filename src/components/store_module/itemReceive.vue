@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received No</label>
-                        <input type="number" class="form-control" id="input_area">
+                        <input type="number" class="form-control" id="input_area" v-model="Received_No">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
@@ -40,8 +40,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">SL</th>
-                                <th scope="col">Item ID</th>
-                                <th scope="col">Unit ID</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Unit Type</th>
                                 <th scope="col">Received Quantity</th>
                                 <th scope="col">Remarks</th>
                                 <th scope="col">Action</th>
@@ -49,69 +49,63 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item  in from" :key="item">
-                                <th scope="row">1</th>
-                                <td><input type="number" class="form-control" v-model="item.item_id"></td>
-                                <td><input type="number" class="form-control" v-model="item.unit_id"></td>
-                                <td><input type="number" class="form-control" v-model="item.received_quantity"></td>
-                                <td><input type="text" class="form-control" v-model="item.remarks"></td>
+                            <tr v-for="items, index  in item" :key="items">
+                                <th scope="row">{{index+1}}</th>
                                 <td>
-                                    <button v-if="index!==0" class="btn btn-danger me-md-2"  type="button" @click="removeRow(index)"><i class="bi bi-x-octagon"></i></button>
-                                    <button class="btn btn-success me-md-2"  type="button" @click="addRow"><i class="bi bi-plus-circle"></i></button>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected >Tap this to select Item</option>
+                                        <option value="">5465</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Select Item Unit Type</option>
+                                        <option value="1">dfcxv</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" class="form-control" v-model="items.received_quantity"></td>
+                                <td><input type="text" class="form-control" v-model="items.remarks"></td>
+                                <td>
+                                    <button v-if="index!==0" class="btn btn-danger me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-x-octagon"></i></button>
+                                    <button class="btn btn-success me-md-2" type="button" @click="addRow"><i class="bi bi-plus-circle"></i></button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <!-- <div class="row" id="receive_item_filds_row" v-for="item,index  in from" :key="item">
-
-                        <div class="col-md-2">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Item ID</label>
-                            <input type="number" class="form-control" v-model="item.item_id">
-                        </div>
-                        <div class="col-md-2">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Unit ID</label>
-                            <input type="number" class="form-control" v-model="item.unit_id">
-                        </div>
-                        <div class="col-md-2">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Received Quantity</label>
-                            <input type="number" class="form-control" v-model="item.received_quantity">
-                        </div>
-                        <div class="col-md-4">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Remarks</label>
-                            <input type="text" class="form-control" v-model="item.remarks">
-                        </div>
-                        <div class="col-md-2" id="receive_item_filds_action_group_col">
-                            <button v-if="index!==0" class="btn btn-danger me-md-2" id="receive_item_filds_action_group" type="button" @click="removeRow(index)"><i class="bi bi-x-octagon"></i></button>
-                            <button class="btn btn-success me-md-2" id="receive_item_filds_action_group" type="button" @click="addRow"><i class="bi bi-plus-circle"></i></button>
-                        </div>
-                    </div> -->
                 </div>
             </form>
             <div class="row">
                 <div class="col-md-12" id="submit_items_row">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button id="submit_items" class="btn btn-primary me-md-2" type="button">Button</button>
+                        <button id="submit_items" class="btn btn-primary me-md-2" @click="fainalSubmit(Received_No, item)" type="button">Button</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
-        
+
     </div>
 </div>
 </template>
 
 <script>
 import {
-    reactive
-} from 'vue';
+    ref
+} from "@vue/reactivity";
 export default {
     data() {
-
+        return {
+            itemlList: []
+        }
     },
     created() {
-
+        fetch("http://103.4.145.242:8006/api/auth/store-item")
+            .then((response) => response.json())
+            .then((json) => (this.itemlList = json));
     },
     methods: {
         // saveData(StudentName, student_id, email, presentaddress) {
@@ -133,30 +127,27 @@ export default {
         //             this.fetchData();
         //         });
         // },
+        fainalSubmit(Received_No,item) {
+            console.log(Received_No,item)
+        }
 
     },
     setup() {
-        const from = reactive([{
-            studentName: '',
-            age: '',
-            batch: ''
-        }])
-
+        const item = ref([{}]);
         const addRow = () => {
-            from.push({
-                studentName: '',
-                age: '',
-                batch: ''
-            })
-        }
-
+            item.value.push([{
+                received_quantity: "",
+                remarks: ""
+            }]);
+            console.log(item.value)
+        };
         const removeRow = (index) => {
-            if (from.length > 1) {
-                from.splice(index, 1)
+            if (item.value.length > 1) {
+                item.value.splice(index, 1)
             }
         }
         return {
-            from,
+            item,
             addRow,
             removeRow
         }
