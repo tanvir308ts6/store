@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
-                        <input type="date" class="form-control" id="input_area" >
+                        <input type="date" class="form-control" id="input_area">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">MRR No</label>
@@ -35,7 +35,35 @@
                             <h1 id="item_header">Item Details</h1>
                         </div>
                     </div>
-                    <div class="row" id="receive_item_filds_row" v-for="item,index  in from" :key="item">
+                    <!-- table for daynamic row -->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">SL</th>
+                                <th scope="col">Item ID</th>
+                                <th scope="col">Unit ID</th>
+                                <th scope="col">Received Quantity</th>
+                                <th scope="col">Remarks</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item  in from" :key="item">
+                                <th scope="row">1</th>
+                                <td><input type="number" class="form-control" v-model="item.item_id"></td>
+                                <td><input type="number" class="form-control" v-model="item.unit_id"></td>
+                                <td><input type="number" class="form-control" v-model="item.received_quantity"></td>
+                                <td><input type="text" class="form-control" v-model="item.remarks"></td>
+                                <td>
+                                    <button v-if="index!==0" class="btn btn-danger me-md-2"  type="button" @click="removeRow(index)"><i class="bi bi-x-octagon"></i></button>
+                                    <button class="btn btn-success me-md-2"  type="button" @click="addRow"><i class="bi bi-plus-circle"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <div class="row" id="receive_item_filds_row" v-for="item,index  in from" :key="item">
+
                         <div class="col-md-2">
                             <label id="input_box_level" for="inputEmail4" class="form-label">Item ID</label>
                             <input type="number" class="form-control" v-model="item.item_id">
@@ -56,7 +84,7 @@
                             <button v-if="index!==0" class="btn btn-danger me-md-2" id="receive_item_filds_action_group" type="button" @click="removeRow(index)"><i class="bi bi-x-octagon"></i></button>
                             <button class="btn btn-success me-md-2" id="receive_item_filds_action_group" type="button" @click="addRow"><i class="bi bi-plus-circle"></i></button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </form>
             <div class="row">
@@ -160,11 +188,13 @@ export default {
     overflow: auto;
     color: rgb(153, 153, 153);
 }
-#input_area{
+
+#input_area {
     border: none;
     border-bottom: 1px solid rgb(46, 46, 46);
     border-radius: 0 !important;
 }
+
 #receive_item_filds {
     border-radius: 0 !important;
     border: 1px solid rgb(218, 218, 218);
@@ -175,8 +205,6 @@ export default {
     height: 280px;
     overflow-x: scroll;
 }
-
-
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {
@@ -214,7 +242,7 @@ export default {
 
 #receive_item_filds_row {
     margin: 8px;
-    
+
 }
 
 #receive_item_filds_action_group_col {
@@ -223,13 +251,14 @@ export default {
 
 /* #receive_item_filds_action_group_add {
     margin-top: 44px;
-       
+
 } */
 
 #receive_item_filds_action_group {
     margin-top: 22px;
 
 }
+
 /* #receive_item_filds_action_group i {
     font-size:16px;
 } */
