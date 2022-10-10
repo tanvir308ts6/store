@@ -7,25 +7,25 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received No</label>
-                        <input type="number" class="form-control" id="input_area">
+                        <input v-model="received_no" type="number" class="form-control" id="input_area">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
-                        <input type="date" class="form-control" id="input_area" >
+                        <input v-model="received_date" type="date" class="form-control" id="input_area">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">MRR No</label>
-                        <input type="number" class="form-control" id="input_area">
+                        <input v-model="mrr_no" type="number" class="form-control" id="input_area">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received By</label>
-                        <input type="text" class="form-control" id="input_area">
+                        <input v-model="received_by" type="text" class="form-control" id="input_area">
                     </div>
                     <div class="col-md-6">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Item Remarks</label>
-                        <input type="text" class="form-control" id="input_area">
+                        <input v-model="remarks" type="text" class="form-control" id="input_area">
                     </div>
                 </div>
                 <div class="card" id="receive_item_filds">
@@ -36,6 +36,7 @@
                         </div>
                     </div>
                     <div class="row" id="receive_item_filds_row" v-for="item,index  in from" :key="item">
+
                         <div class="col-md-2">
                             <label id="input_box_level" for="inputEmail4" class="form-label">Item ID</label>
                             <input type="number" class="form-control" v-model="item.item_id">
@@ -62,14 +63,24 @@
             <div class="row">
                 <div class="col-md-12" id="submit_items_row">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button id="submit_items" class="btn btn-primary me-md-2" type="button">Button</button>
+                        <button id="submit_items" @click="SaveData(
+                            received_no,
+                            received_date, 
+                            mrr_no,
+                            received_by,
+                            remarks,
+                            item.item_id,
+                            unit_id, 
+                            received_quantity, 
+                            remarks
+                        )" class="btn btn-primary me-md-2" type="button">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        
+
     </div>
 </div>
 </template>
@@ -86,6 +97,12 @@ export default {
 
     },
     methods: {
+        SaveData(a,b,c,d,e,f,g,h,i) {
+
+            console.log('gugugu',a)
+             console.log('ssss',from)
+           
+        }
         // saveData(StudentName, student_id, email, presentaddress) {
         //     fetch("http://127.0.0.1:8000/api/addstudent", {
         //             method: "post",
@@ -108,11 +125,9 @@ export default {
 
     },
     setup() {
-        const from = reactive([{
-            studentName: '',
-            age: '',
-            batch: ''
-        }])
+        const from = reactive([{}])
+
+       
 
         const addRow = () => {
             from.push({
@@ -163,11 +178,13 @@ export default {
     overflow: auto;
     color: rgb(153, 153, 153);
 }
-#input_area{
+
+#input_area {
     border: none;
-    border-bottom: 1px solid rgb(46, 46, 46);
+    border-bottom: 1px solid rgb(185, 185, 185);
     border-radius: 0 !important;
 }
+
 #receive_item_filds {
     border-radius: 0 !important;
     border: 1px solid rgb(218, 218, 218);
@@ -178,8 +195,6 @@ export default {
     height: 280px;
     overflow-x: scroll;
 }
-
-
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {
@@ -217,7 +232,7 @@ export default {
 
 #receive_item_filds_row {
     margin: 8px;
-    
+
 }
 
 #receive_item_filds_action_group_col {
@@ -226,13 +241,14 @@ export default {
 
 /* #receive_item_filds_action_group_add {
     margin-top: 44px;
-       
+
 } */
 
 #receive_item_filds_action_group {
     margin-top: 22px;
 
 }
+
 /* #receive_item_filds_action_group i {
     font-size:16px;
 } */
