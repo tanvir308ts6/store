@@ -7,11 +7,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received No</label>
+<<<<<<< HEAD
                         <input v-model="received_no" type="number" class="form-control" id="input_area">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
                         <input v-model="received_date" type="date" class="form-control" id="input_area">
+=======
+                        <input type="number" class="form-control" id="input_area" v-model="Received_No">
+                    </div>
+                    <div class="col-md-4">
+                        <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
+                        <input type="date" class="form-control" id="input_area">
+>>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">MRR No</label>
@@ -35,27 +43,50 @@
                             <h1 id="item_header">Item Details</h1>
                         </div>
                     </div>
+<<<<<<< HEAD
                     <div class="row" id="receive_item_filds_row" v-for="item,index  in from" :key="item">
 
+=======
+                    <!-- table for daynamic row -->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">SL</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Unit Type</th>
+                                <th scope="col">Received Quantity</th>
+                                <th scope="col">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="items, index  in item" :key="items">
+                                <th scope="row">{{index+1}}</th>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected >Tap this to select Item</option>
+                                        <option value="">5465</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Select Item Unit Type</option>
+                                        <option value="1">dfcxv</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" class="form-control" v-model="items.received_quantity"></td>
+                                <td><input type="text" class="form-control" v-model="items.remarks"></td>
+                                <td>
+                                    <button v-if="index!==0" class="btn btn-danger me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-trash3"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+>>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
                         <div class="col-md-2">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Item ID</label>
-                            <input type="number" class="form-control" v-model="item.item_id">
-                        </div>
-                        <div class="col-md-2">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Unit ID</label>
-                            <input type="number" class="form-control" v-model="item.unit_id">
-                        </div>
-                        <div class="col-md-2">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Received Quantity</label>
-                            <input type="number" class="form-control" v-model="item.received_quantity">
-                        </div>
-                        <div class="col-md-4">
-                            <label id="input_box_level" for="inputEmail4" class="form-label">Remarks</label>
-                            <input type="text" class="form-control" v-model="item.remarks">
-                        </div>
-                        <div class="col-md-2" id="receive_item_filds_action_group_col">
-                            <button v-if="index!==0" class="btn btn-danger me-md-2" id="receive_item_filds_action_group" type="button" @click="removeRow(index)"><i class="bi bi-x-octagon"></i></button>
-                            <button class="btn btn-success me-md-2" id="receive_item_filds_action_group" type="button" @click="addRow"><i class="bi bi-plus-circle"></i></button>
+                            <button id="receive_item_filds_action_group" class="btn btn-success me-md-2" type="button" @click="addRow"><i class="bi bi-plus-circle"> Add More</i></button>
                         </div>
                     </div>
                 </div>
@@ -63,6 +94,7 @@
             <div class="row">
                 <div class="col-md-12" id="submit_items_row">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<<<<<<< HEAD
                         <button id="submit_items" @click="SaveData(
                             received_no,
                             received_date, 
@@ -74,11 +106,15 @@
                             received_quantity, 
                             remarks
                         )" class="btn btn-primary me-md-2" type="button">Submit</button>
+=======
+                        <button id="submit_items" class="btn btn-primary me-md-2" @click="fainalSubmit(Received_No, item )" type="button">Button</button>
+>>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
 
     </div>
@@ -87,14 +123,18 @@
 
 <script>
 import {
-    reactive
-} from 'vue';
+    ref
+} from "@vue/reactivity";
 export default {
     data() {
-
+        return {
+            itemlList: []
+        }
     },
     created() {
-
+        fetch("http://103.4.145.242:8006/api/auth/store-item")
+            .then((response) => response.json())
+            .then((json) => (this.itemlList = json));
     },
     methods: {
         SaveData(a,b,c,d,e,f,g,h,i) {
@@ -122,28 +162,34 @@ export default {
         //             this.fetchData();
         //         });
         // },
+        fainalSubmit(Received_No,a, b) {
+            console.log(Received_No,a, b)
+        }
 
     },
     setup() {
+<<<<<<< HEAD
         const from = reactive([{}])
 
        
 
+=======
+        const item = ref([{}]);
+>>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
         const addRow = () => {
-            from.push({
-                studentName: '',
-                age: '',
-                batch: ''
-            })
-        }
-
+            item.value.push([{
+                received_quantity: "",
+                remarks: ""
+            }]);
+            // console.log(item.value)
+        };
         const removeRow = (index) => {
-            if (from.length > 1) {
-                from.splice(index, 1)
+            if (item.value.length > 1) {
+                item.value.splice(index, 1)
             }
         }
         return {
-            from,
+            item,
             addRow,
             removeRow
         }
@@ -192,10 +238,16 @@ export default {
     padding-top: -20px;
     margin-top: 30px;
     width: 100%;
-    height: 280px;
+    height: 300px;
     overflow-x: scroll;
 }
+<<<<<<< HEAD
 
+=======
+.table{
+    border-color: rgb(255, 255, 255);
+}
+>>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
 /* Scrollbar styles */
 ::-webkit-scrollbar {
     width: 8px;
@@ -245,13 +297,20 @@ export default {
 } */
 
 #receive_item_filds_action_group {
-    margin-top: 22px;
+   width: 100%;
+   margin-left: 5%;
+   background-color:rgb(68, 115, 204);
+   border: none;
 
 }
 
+<<<<<<< HEAD
 /* #receive_item_filds_action_group i {
+=======
+#receive_item_filds_action_group i {
+>>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
     font-size:16px;
-} */
+}
 
 #submit_items_row {
     margin-top: 40px;
