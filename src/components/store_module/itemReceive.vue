@@ -7,19 +7,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received No</label>
-<<<<<<< HEAD
-                        <input v-model="received_no" type="number" class="form-control" id="input_area">
-                    </div>
-                    <div class="col-md-4">
-                        <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
-                        <input v-model="received_date" type="date" class="form-control" id="input_area">
-=======
                         <input type="number" class="form-control" id="input_area" v-model="Received_No">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">Received Date</label>
-                        <input type="date" class="form-control" id="input_area">
->>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
+                        <input type="date" class="form-control" id="input_area" v-model="Received_date">
                     </div>
                     <div class="col-md-4">
                         <label id="input_box_level" for="inputEmail4" class="form-label">MRR No</label>
@@ -43,10 +35,6 @@
                             <h1 id="item_header">Item Details</h1>
                         </div>
                     </div>
-<<<<<<< HEAD
-                    <div class="row" id="receive_item_filds_row" v-for="item,index  in from" :key="item">
-
-=======
                     <!-- table for daynamic row -->
                     <table class="table">
                         <thead>
@@ -62,17 +50,15 @@
                             <tr v-for="items, index  in item" :key="items">
                                 <th scope="row">{{index+1}}</th>
                                 <td>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected >Tap this to select Item</option>
-                                        <option value="">5465</option>
+                                    <select v-model="items.item_name" class="form-select" aria-label="Default select example">
+                                        <option disabled >Tap this to select Item</option>
+                                        <option v-for="lists,index in itemlList" :key="index" :value="lists?.item_code">{{lists?.item_name}}</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Select Item Unit Type</option>
-                                        <option value="1">dfcxv</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select v-model="items.unit_name" class="form-select" aria-label="Default select example">
+                                        <option disabled>Select Item Unit Type</option>
+                                         <option v-for="lists, index in unitList" :key="index" :value="lists?.id">{{lists?.unit_name}}</option>
                                     </select>
                                 </td>
                                 <td><input type="number" class="form-control" v-model="items.received_quantity"></td>
@@ -82,9 +68,9 @@
                                 </td>
                             </tr>
                         </tbody>
+                        
                     </table>
                     <div class="row">
->>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
                         <div class="col-md-2">
                             <button id="receive_item_filds_action_group" class="btn btn-success me-md-2" type="button" @click="addRow"><i class="bi bi-plus-circle"> Add More</i></button>
                         </div>
@@ -94,21 +80,7 @@
             <div class="row">
                 <div class="col-md-12" id="submit_items_row">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-<<<<<<< HEAD
-                        <button id="submit_items" @click="SaveData(
-                            received_no,
-                            received_date, 
-                            mrr_no,
-                            received_by,
-                            remarks,
-                            item.item_id,
-                            unit_id, 
-                            received_quantity, 
-                            remarks
-                        )" class="btn btn-primary me-md-2" type="button">Submit</button>
-=======
-                        <button id="submit_items" class="btn btn-primary me-md-2" @click="fainalSubmit(Received_No, item )" type="button">Button</button>
->>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
+                        <button id="submit_items" class="btn btn-primary me-md-2" @click="fainalSubmit(Received_date,item)" type="button">Button</button>
                     </div>
                 </div>
             </div>
@@ -128,21 +100,39 @@ import {
 export default {
     data() {
         return {
-            itemlList: []
+            itemlList: [],
+            unitList:[]
         }
     },
     created() {
         fetch("http://103.4.145.242:8006/api/auth/store-item")
             .then((response) => response.json())
-            .then((json) => (this.itemlList = json));
+            .then((json) => {this.itemlList = json?.data?.data}).catch;
+
+        fetch(`http://103.4.145.242:8006/api/auth/unit`)
+            .then((response)=>response.json())
+            .then((json)=> {this.unitList=json?.data}).catch;
+        
+    },
+    watch:{
+        itemlList(newVal, preVal){
+            console.log(newVal)
+        }
     },
     methods: {
-        SaveData(a,b,c,d,e,f,g,h,i) {
 
-            console.log('gugugu',a)
-             console.log('ssss',from)
+
+
+
+
+
+
+        // SaveData(a,b,c,d,e,f,g,h,i) {
+
+        //     console.log('gugugu',a)
+        //      console.log('ssss',from)
            
-        }
+        // },
         // saveData(StudentName, student_id, email, presentaddress) {
         //     fetch("http://127.0.0.1:8000/api/addstudent", {
         //             method: "post",
@@ -162,22 +152,17 @@ export default {
         //             this.fetchData();
         //         });
         // },
-        fainalSubmit(Received_No,a, b) {
-            console.log(Received_No,a, b)
+        fainalSubmit(Received_date,item) {
+            console.log(Received_date,item)
         }
 
     },
     setup() {
-<<<<<<< HEAD
-        const from = reactive([{}])
-
-       
-
-=======
         const item = ref([{}]);
->>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
         const addRow = () => {
             item.value.push([{
+                item_name:"",
+                unit_name:"",
                 received_quantity: "",
                 remarks: ""
             }]);
@@ -241,13 +226,9 @@ export default {
     height: 300px;
     overflow-x: scroll;
 }
-<<<<<<< HEAD
-
-=======
 .table{
     border-color: rgb(255, 255, 255);
 }
->>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
 /* Scrollbar styles */
 ::-webkit-scrollbar {
     width: 8px;
@@ -304,11 +285,7 @@ export default {
 
 }
 
-<<<<<<< HEAD
-/* #receive_item_filds_action_group i {
-=======
 #receive_item_filds_action_group i {
->>>>>>> f6884125241c481f3c8b8750509d154a63c2a0dc
     font-size:16px;
 }
 
