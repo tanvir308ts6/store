@@ -38,12 +38,12 @@ export default {
 
 <style>
 .accordion-button {
-
     border-radius: none !important;
 }
-
+.accordion-item{
+    border:none !important;
+}
 .accordion {
-    border-radius: none !important;
     width: 100%;
     color: black;
     margin-top: 20px;

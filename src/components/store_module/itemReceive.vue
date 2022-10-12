@@ -112,8 +112,9 @@ export default {
         fetch(`http://103.4.145.242:8006/api/auth/unit`)
             .then((response)=>response.json())
             .then((json)=> {this.unitList=json?.data}).catch;
-        
-    },
+            
+            
+            },
     watch:{
         itemlList(newVal, preVal){
             console.log(newVal)
