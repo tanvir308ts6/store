@@ -79,7 +79,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Item Name</th>
                             <th scope="col">Balance</th>
-                            <th scope="col">Item Code</th>
+                            <th scope="col" id="action_col">Item Code</th>
                             <th scope="col" id="action_col">Action</th>
                         </tr>
                     </thead>
@@ -88,7 +88,7 @@
                             <th scope="row">{{ itemlLists.id }}</th>
                             <td>{{ itemlLists.item_name }}</td>
                             <td>{{ itemlLists?.balance?.balance_quantity ?? "Not Found" }}</td>
-                            <td>{{ itemlLists.item_code }}</td>
+                            <td id="action_col">{{ itemlLists.item_code }}</td>
                             <td id="action_col">
                                 <button class="btn btn-primary me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-pencil"></i></button>
                                 <button class="btn btn-danger me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-trash3"></i></button>  
