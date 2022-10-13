@@ -44,26 +44,27 @@
                                 <th scope="col">Unit Type</th>
                                 <th scope="col">Received Quantity</th>
                                 <th scope="col">Remarks</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="items, index  in item" :key="items">
+                            <tr id="item_input_row" v-for="items, index  in item" :key="items">
                                 <th scope="row">{{index+1}}</th>
-                                <td>
-                                    <select v-model="items.item_name" class="form-select" aria-label="Default select example">
+                                <td id="item_input_data">
+                                    <select id="item_input_box" v-model="items.item_name" class="form-select" aria-label="Default select example">
                                         <option disabled >Tap this to select Item</option>
                                         <option v-for="lists,index in itemlList" :key="index" :value="lists?.item_code">{{lists?.item_name}}</option>
                                     </select>
                                 </td>
-                                <td>
-                                    <select v-model="items.unit_name" class="form-select" aria-label="Default select example">
+                                <td id="item_input_data">
+                                    <select id="item_input_box" v-model="items.unit_name" class="form-select" aria-label="Default select example">
                                         <option disabled>Select Item Unit Type</option>
                                          <option v-for="lists, index in unitList" :key="index" :value="lists?.id">{{lists?.unit_name}}</option>
                                     </select>
                                 </td>
-                                <td><input type="number" class="form-control" v-model="items.received_quantity"></td>
-                                <td><input type="text" class="form-control" v-model="items.remarks"></td>
-                                <td>
+                                <td id="item_input_data"><input type="number" id="item_input_box" class="form-control" v-model="items.received_quantity"></td>
+                                <td id="item_input_data"><input type="text" id="item_input_box" class="form-control" v-model="items.remarks"></td>
+                                <td id="item_input_data">
                                     <button v-if="index!==0" class="btn btn-danger me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-trash3"></i></button>
                                 </td>
                             </tr>
@@ -219,13 +220,15 @@ export default {
 
 #receive_item_filds {
     border-radius: 0 !important;
-    border: 1px solid rgb(218, 218, 218);
-    padding: 10px;
+    /* border: 1px solid rgb(218, 218, 218); */
+    border:none;
+    padding: 30px;
     padding-top: -20px;
     margin-top: 30px;
     width: 100%;
     height: 300px;
     overflow-x: scroll;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .table{
     border-color: rgb(255, 255, 255);
@@ -268,7 +271,17 @@ export default {
     margin: 8px;
 
 }
-
+#item_input_row{
+    border: 1px solid#000;
+}
+#item_input_data{
+    border: 1px solid#000;
+}
+#item_input_box{
+    /* border-color: black; */
+    border:none;
+    border-radius: 0%;
+}
 #receive_item_filds_action_group_col {
     text-align: center;
 }
