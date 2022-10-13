@@ -1,8 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from './components/store_module/Home.vue';
-import itemReceive from './components/store_module/itemReceive.vue';
+// import itemReceive from './components/store_module/itemReceive.vue';
 import itemList  from './components/store_module/itemList.vue';
-import AddItem from './components/store_module/AddItem.vue';
+import ReceiveItemList from './components/store_module/ReceiveItemList.vue';
 
 const routes=[
     {
@@ -16,15 +16,15 @@ const routes=[
         component:itemList
     },
     {
-        name:'AddItem',
-        path:'/AddItem',
-        component:AddItem
+        name:'ReceiveItemList',
+        path:'/ReceiveItemList',
+        component:ReceiveItemList
     },
-    {
-        name:'itemReceive',
-        path:'/itemReceive',
-        component:itemReceive
-    },
+    // {
+    //     name:'itemReceive',
+    //     path:'/itemReceive',
+    //     component:itemReceive
+    // },
 ];
 
 const router=createRouter({

@@ -3,7 +3,7 @@
     <div class="row" id="item_form_row">
         <!-- Add Item Model -->
         <div class="col-md-12">
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header" id="exampleModalLabel">
@@ -30,6 +30,7 @@
                                     </div>
                                     <!-- .......................... -->
                                     <div class="col-md-4">
+                                         <label for="inputState" id="input_box_level" class="form-label">Item Status</label>
                                         <select v-model="item_status" class="form-select" aria-label="Default select example">
                                             <option disabled>Select Item Unit Type</option>
                                             <option value="1">Active</option>
@@ -54,7 +55,7 @@
 
             <!-- edit Modal or item edit -->
             <!-- editModal -->
-            <div class="modal fade" id="exampleeditModal" tabindex="-1" aria-labelledby="exampleeditModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleeditModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleeditModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header" id="edit_modal_head">
@@ -79,6 +80,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
+                                        <label for="inputState" id="input_box_level" class="form-label">Item Status</label>
                                         <select v-model="itemlListsr.item_status" class="form-select" aria-label="Default select example">
                                             <option disabled>Select Item Unit Type</option>
                                             <option value="1">Active</option>
@@ -139,13 +141,12 @@
                                     <!-- <td id="action_col">{{ itemlLists?.item_status}}</td> -->
                                     <td id="action_col_btn">
                                         <button class="btn btn-primary me-md-2" data-bs-toggle="modal" data-bs-target="#exampleeditModal" type="submit" @click="editItem(itemlLists.id)"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-danger me-md-2" type="button" @click="removeRow(index)"><i class="bi bi-trash3"></i></button>
+                                        <button class="btn btn-danger me-md-2" type="button" @click="removeitem(itemlLists.id)"><i class="bi bi-trash3"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    {{itemlListsr.message}}
                 </div>
             </div>
         </div>
@@ -237,7 +238,12 @@ export default {
            
 
         // Delete Item Data
-
+        removeitem(itemId){
+            fetch(`http://103.4.145.242:8006/api/auth/store-item/${itemId}`, {
+                method: 'DELETE',
+            })
+            .then((json) => this.getItemData())
+        }
     },
 };
 </script>

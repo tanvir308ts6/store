@@ -19,9 +19,14 @@
                                     <router-link class="list-group-item list-group-item-action" to="/itemList">Item List</router-link>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a href="#" class="list-group-item list-group-item-action">
                                     <router-link class="list-group-item list-group-item-action" to="/itemReceive">Item Receive Form</router-link>
+                                </a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <router-link class="list-group-item list-group-item-action" to="/ReceiveItemList">Item Receive List</router-link>
                                 </a>
                             </li>
                         </ul>
