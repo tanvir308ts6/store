@@ -1,10 +1,11 @@
 <template>
 <div class="row">
     <div class="col-md-12">
-        <div class="row">
+        <div class="card" id="item_receve_list_card">
+            <div class="row">
             <!-- receive item list -->
             <div class="col-md-10">
-
+                <h1 id="item_form_header">Receive Item List</h1>
             </div>
             <!-- receive item modal -->
             <div class="col-md-2">
@@ -190,6 +191,8 @@
                 </div>
             </div>
         </div>
+        </div>
+        
     </div>
 </div>
 </template>
@@ -313,7 +316,12 @@ export default {
     border: none;
     /* padding: 40px; */
 }
-
+#item_receve_list_card{
+    margin-top: 20px;
+    border-radius: 0%;
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 #item_form_header {
     font-size: 28px;
     font-family: 'Lato', sans-serif;

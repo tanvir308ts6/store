@@ -4,11 +4,11 @@
         <!-- Unit List  -->
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card" id="item_receve_list_card">
                     <!-- unit list table Heading and button -->
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>Unit List</h4>
+                            <h4 id="item_form_header">Unit List</h4>
                         </div>
                     </div>
                     <!-- unit list table -->
@@ -38,7 +38,6 @@
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -75,5 +74,10 @@ export default {
 </script>
 
 <style>
-
+#item_receve_list_card{
+    margin-top: 20px;
+    border-radius: 0%;
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 </style>
