@@ -3,6 +3,7 @@ import Home from './components/store_module/Home.vue';
 // import itemReceive from './components/store_module/itemReceive.vue';
 import itemList  from './components/store_module/itemList.vue';
 import ReceiveItemList from './components/store_module/ReceiveItemList.vue';
+import UnitList from './components/store_module/unitList.vue';
 
 const routes=[
     {
@@ -25,6 +26,11 @@ const routes=[
     //     path:'/itemReceive',
     //     component:itemReceive
     // },
+    {
+        name:'UnitList',
+        path:'/UnitList',
+        component:UnitList
+    }
 ];
 
 const router=createRouter({

@@ -16,6 +16,11 @@
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="list-group-item list-group-item-action">
+                                    <router-link class="list-group-item list-group-item-action" to="/UnitList">Unit List</router-link>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="list-group-item list-group-item-action">
                                     <router-link class="list-group-item list-group-item-action" to="/itemList">Item List</router-link>
                                 </a>
                             </li>
@@ -46,11 +51,13 @@ export default {
 </script>
 
 <style>
-#sidebar{
+#sidebar {
     background-color: rgb(255, 255, 255);
     height: 640px;
-    border-right: 1px solid rgb(160, 160, 160);;
+    border-right: 1px solid rgb(160, 160, 160);
+    ;
 }
+
 .accordion-button {
     border-radius: none !important;
 }
