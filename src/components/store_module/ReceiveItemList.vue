@@ -73,7 +73,7 @@
                                                         <td id="item_input_data">
                                                             <select id="item_input_box" v-model="items.item_id" class="form-select" aria-label="Default select example">
                                                                 <option disabled>Tap this to select Item</option>
-                                                                <option v-for="lists,index in itemlList" :key="index" :value="lists?.item_code">{{lists?.item_name}}</option>
+                                                                <option v-for="lists,index in itemlList" :key="index" :value="lists?.id">{{lists?.item_name}}</option>
                                                             </select>
                                                         </td>
                                                         <td id="item_input_data">
@@ -251,7 +251,7 @@ export default {
                     },
                 })
                 .then((response) => response.json())
-                .then((json) => this.itemReceiveList(),console.log(dataForm)).catch;
+                .then((json) => {this.itemReceiveList(),console.log(dataForm);console.log(json.massage)}).catch;
         },
        
 
