@@ -117,8 +117,15 @@
         <!-- Receive item list -->
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <table class="table table-hover">
+                 <!-- <div class="row">
+                    <div class="col-md-2">
+                            <button class="btn btn-sm" type="button" id="receive_item_length">{{tlength}}</button>
+                    </div>
+                </div> -->
+                <div class="card" id="receive_item_card">
+                    
+                    <table class="table table-hover" id="item_receve_table">
+                        
                         <thead>
                             <tr>
                                 <th scope="col" id="action_col_head">SL</th>
@@ -138,10 +145,7 @@
                                 <td id="action_col">{{itemReceive?.received_by}}</td>
                                 <td id="action_col">{{itemReceive?.received_date}}</td>
                                 <td id="action_col">{{itemReceive?.remarks}}</td>
-                                <!-- <td id="action_col">{{ itemlLists?.item_status}}</td> -->
                                 <td id="action_col_button">
-                                    <!-- <button class="btn btn-primary me-md-2" data-bs-toggle="modal" data-bs-target="#exampleeditModal" type="submit" @click="editItem(itemlLists.id)"><i class="bi bi-pencil"></i></button>
-                                    <button class="btn btn-danger me-md-2" type="button" @click="removeitem(itemlLists.id)"><i class="bi bi-trash3"></i></button> -->
                                     <!-- Button trigger viewModal -->
                                     <button type="button" class="btn" id="item_vue_btn" @click="getItemDetail(itemReceive?.item_details)" data-bs-toggle="modal" data-bs-target="#examplemodalitemList">
                                         View items
@@ -159,9 +163,6 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <!-- <ul class="list-group" v-for="(itemReceive, index) in itemReceived" :key="index">
-                                                              <li v-for="(letestItem,index) in itemReceive.item_details" :key="index" class="list-group-item">{{letestItem?.item?.item_name}}</li>
-                                                            </ul> -->
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>
@@ -173,11 +174,11 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="itemdetaillists, index in itemDetails" :key="index">
-                                                                        <th>{{index+1}}</th>
-                                                                        <td>{{itemdetaillists?.item?.item_name ??"Not Found"}}</td>
-                                                                        <td>{{itemdetaillists?.item?.item_code??"Not Found"}}</td>
-                                                                        <td v-if="itemdetaillists?.item?.item_status == 1">Active</td>
-                                                                        <td v-else>Inactive</td>
+                                                                        <th id="action_col">{{index+1}}</th>
+                                                                        <td id="action_col">{{itemdetaillists?.item?.item_name ??"Not Found"}}</td>
+                                                                        <td id="action_col">{{itemdetaillists?.item?.item_code??"Not Found"}}</td>
+                                                                        <td id="action_col" v-if="itemdetaillists?.item?.item_status == 1">Active</td>
+                                                                        <td id="action_col" v-else>Inactive</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -210,7 +211,8 @@ export default {
             itemReceived: [],
             itemlList: [],
             unitList: [],
-            itemDetails: []
+            itemDetails: [],
+            tlength:{},
         }
     },
     created() {
@@ -229,7 +231,7 @@ export default {
             fetch(`http://103.4.145.242:8006/api/auth/store-item-receive`)
                 .then((response) => response.json())
                 .then((json) => {
-                    this.itemReceived = json ?.data ?.data
+                    this.tlength = json?.data?.total;this.itemReceived = json ?.data ?.data
                 });
         },
         // Get item list
@@ -306,11 +308,18 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
-
+#receive_item_length{
+    background-color: #3F51B5;
+    color: rgb(255, 255, 255);
+    border-radius: 60%;
+    width: 100%;
+    margin-left: -24px;
+    margin-top: -160px;
+   
+}
 #action_col_button {
     text-align: center;
     border: 1px solid #000;
-    /* padding: 0; */
     padding: 10px;
 }
 #item_vue_btn{
@@ -338,10 +347,6 @@ export default {
     font-size: 28px;
     font-family: 'Lato', sans-serif;
 }
-
-/* #item_receive_form {
-    padding: 20px;
-} */
 
 #input_box_level {
     font-size: 14px;

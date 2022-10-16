@@ -68,9 +68,6 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Close
-                            </button> -->
                             <button @click="fainalSubmit(item.item_code,item.item_name,item.unit_id,item.item_status)" type="submit" class="btn btn-primary">
                                 Save
                             </button>
@@ -197,7 +194,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 </template>
