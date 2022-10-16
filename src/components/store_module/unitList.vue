@@ -31,7 +31,7 @@
                                         <td id="action_col" v-if="unitlLists.unit_status == 0">Inactive</td>
                                         <td id="action_col_btn">
                                             <button class="btn btn-primary me-md-2" data-bs-toggle="modal" data-bs-target="#exampleeditModal" type="submit" @click="editItem(itemlLists.id)"><i class="bi bi-pencil"></i></button>
-                                            <button class="btn btn-danger me-md-2" type="button" @click="removeitem(itemlLists.id)"><i class="bi bi-trash3"></i></button>
+                                            <button class="btn btn-danger me-md-2" type="button" @click="removeUnit()"><i class="bi bi-trash3"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>

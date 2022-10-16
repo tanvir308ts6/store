@@ -8,7 +8,7 @@
                     <div class="modal-content">
                         <div class="modal-header" id="exampleModalLabel">
                             <h5 class="modal-title">Add Item Form</h5>
-                            <button type="button" class="btn btn-light btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn btn-light btn-close" data-bs-dismiss="modal" aria-label="Close" @click="clearerr()"></button>
                         </div>
                         <!-- Add Item modal body  -->
                         <div class="modal-body">
@@ -16,28 +16,54 @@
                                 <form class="row g-3">
                                     <div class="col-md-4">
                                         <label for="inputEmail4" id="input_box_level" class="form-label">Item Code</label>
-                                        <input type="number" class="form-control" v-model="item_code">
+                                        <input type="number" class="form-control" v-model="item.item_code">
+                                        <span v-if="item.item_code" class="input-group-text">
+                                            <p id="valide"> </p>
+                                        </span>
+                                        <span v-else-if="errorStatuse == 'error'" class="input-group-text">
+                                            <p>Item Code field is required.</p>
+                                        </span>
+                                        <span v-else class="input-group-text"></span>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="inputPassword4" id="input_box_level" class="form-label">Item Name</label>
-                                        <input type="text" class="form-control" v-model="item_name">
+                                        <input type="text" class="form-control" v-model="item.item_name">
+                                       <span v-if="item.item_name" class="input-group-text">
+                                            <p id="valide"> </p>
+                                        </span>
+                                        <span v-else-if="errorStatuse == 'error'" class="input-group-text">
+                                            <p>Item Name field is required.</p>
+                                        </span>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="inputState" id="input_box_level" class="form-label">Unit in</label>
-                                        <select v-model="unit_id" id="inputState" class="form-select">
+                                        <select v-model="item.unit_id" id="inputState" class="form-select">
                                             <option v-for="lists, index in unitList" :key="index" :value="lists?.id">{{lists?.unit_name}}</option>
                                         </select>
+                                         <span v-if="item.unit_id" class="input-group-text">
+                                            <p id="valide"> </p>
+                                        </span>
+                                        <span v-else-if="errorStatuse == 'error'" class="input-group-text">
+                                            <p>Unit in field is required.</p>
+                                        </span>
                                     </div>
                                     <!-- .......................... -->
                                     <div class="col-md-4">
-                                         <label for="inputState" id="input_box_level" class="form-label">Item Status</label>
-                                        <select v-model="item_status" class="form-select" aria-label="Default select example">
+                                        <label for="inputState" id="input_box_level" class="form-label">Item Status</label>
+                                        <select v-model="item.item_status" class="form-select" aria-label="Default select example">
                                             <option disabled>Select Item Unit Type</option>
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
 
                                         </select>
+                                         <span v-if="item.item_status" class="input-group-text">
+                                            <p id="valide"> </p>
+                                        </span>
+                                        <span v-else-if="errorStatuse == 'error'" class="input-group-text">
+                                            <p>Item Status field is required.</p>
+                                        </span>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -45,7 +71,7 @@
                             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                 Close
                             </button> -->
-                            <button @click="fainalSubmit(item_code,item_name,unit_id,item_status)" type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                            <button @click="fainalSubmit(item.item_code,item.item_name,item.unit_id,item.item_status)" type="submit" class="btn btn-primary">
                                 Save
                             </button>
                         </div>
@@ -64,7 +90,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="card" id="item_add_card">
-                            <form class="row g-3">
+                                <form class="row g-3">
                                     <div class="col-md-4">
                                         <label for="inputEmail4" id="input_box_level" class="form-label">Item Code</label>
                                         <input type="number" class="form-control" v-model="itemlListsr.item_code">
@@ -89,11 +115,11 @@
                                         </select>
                                     </div>
                                 </form>
-                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <!-- <button type="button" class="btn btn-secondary" >Close</button> -->
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="updateItem(itemlListsr.id,itemlListsr.item_code, itemlListsr.item_name, itemlListsr.unit_id, itemlListsr.item_status)">Save changes</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" @click="updateItem(itemlListsr.id,itemlListsr.item_code, itemlListsr.item_name, itemlListsr.unit_id, itemlListsr.item_status)">Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -141,8 +167,29 @@
                                     <!-- <td id="action_col">{{ itemlLists?.item_status}}</td> -->
                                     <td id="action_col_btn">
                                         <button class="btn btn-primary me-md-2" data-bs-toggle="modal" data-bs-target="#exampleeditModal" type="submit" @click="editItem(itemlLists.id)"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-danger me-md-2" type="button" @click="removeitem(itemlLists.id)"><i class="bi bi-trash3"></i></button>
+
+                                        <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" data-bs-target="#exampleModalDel">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
                                     </td>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalDel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header" id="edit_modal_head_delete">
+                                                    <h5 class="modal-title">Delete Item</h5>
+                                                    <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg" id="close_icon"></i></button>
+                                                </div>
+                                                <div class="modal-body" id="worning_modal_bod">
+                                                    <i class="bi bi-exclamation-circle-fill" id="worning"></i>
+                                                    <p id="deleteHeder">Do you want to delete this Item?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-danger me-md-2" type="button" data-bs-dismiss="modal" @click="removeitem(itemlLists.id)">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </tr>
                             </tbody>
                         </table>
@@ -150,6 +197,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 </template>
@@ -160,7 +208,10 @@ export default {
         return {
             itemlList: [],
             unitList: [],
-            itemlListsr: []
+            itemlListsr: [],
+            valmessege: {},
+            errorStatuse: {},
+            item: {}
         };
     },
     created() {
@@ -168,7 +219,14 @@ export default {
         this.getUnitList()
     },
 
-    watch: {},
+    watch: {
+        item:{
+            handler(c,v){
+              
+            },
+            deep: true
+        }
+    },
     methods: {
 
         //Get Unit List Data
@@ -193,6 +251,7 @@ export default {
         // Save Item data
 
         fainalSubmit(item_code, item_name, unit_id, item_status) {
+            console.log(item_code, item_name, unit_id, item_status)
             fetch(`http://103.4.145.242:8006/api/auth/store-item`, {
                     method: 'POST',
                     body: JSON.stringify({
@@ -206,19 +265,29 @@ export default {
                     },
                 })
                 .then((response) => response.json())
-                .then((json) => this.getItemData());
+                .then((json) => {
+                    this.getItemData();
+                    this.valmessege = json ?.message;
+                    this.errorStatuse = json ?.status;
+                    console.log(json)
+                   
+                });
         },
-
+        //clear val
+        clearerr(){
+             this.item = {};
+             this.errorStatuse={}
+        },
         // Update Item data
         editItem(a) {
             fetch(`http://103.4.145.242:8006/api/auth/store-item/${a}`)
                 .then((response) => response.json())
                 .then((json) => {
-                    this.itemlListsr = json?.data
+                    this.itemlListsr = json ?.data
                 }).catch
         },
 
-        updateItem(item_id,item_code, item_name, unit_id, item_status){
+        updateItem(item_id, item_code, item_name, unit_id, item_status) {
             fetch(`http://103.4.145.242:8006/api/auth/store-item/${item_id}`, {
                     method: 'PUT',
                     body: JSON.stringify({
@@ -235,14 +304,12 @@ export default {
                 .then((json) => this.getItemData());
         },
 
-           
-
         // Delete Item Data
-        removeitem(itemId){
+        removeitem(itemId) {
             fetch(`http://103.4.145.242:8006/api/auth/store-item/${itemId}`, {
-                method: 'DELETE',
-            })
-            .then((json) => this.getItemData())
+                    method: 'DELETE',
+                })
+                .then((json) => this.getItemData())
         }
     },
 };
@@ -309,12 +376,21 @@ tbody tr:nth-child(odd) {
     background: #E0F7FA;
 }
 
-
 /* Add item Modal styyle here */
 
 #item_add_card {
     border: none;
     padding: 30px 20px 20px 20px;
+}
+
+.input-group-text {
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.input-group-text p {
+    color: #e40a39 !important;
+    background-color: rgb(255, 255, 255) !important;
 }
 
 #exampleModalLabel {
@@ -356,10 +432,33 @@ tbody tr:nth-child(odd) {
     color: rgb(99, 99, 99);
 }
 
-
 /* edit item modal style here */
-#edit_modal_head{
+#edit_modal_head {
     background-color: rgb(53, 140, 211);
     color: rgb(255, 255, 255);
+}
+
+#worning_modal_bod {
+    display: flex;
+}
+
+#worning {
+    margin-right: 10px;
+    font-size: 40px;
+    color: rgb(196, 37, 37);
+}
+
+#deleteHeder {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+#edit_modal_head_delete {
+    background-color: rgb(196, 37, 37);
+    color: rgb(255, 255, 255);
+}
+#close_icon{
+    color: rgb(255, 255, 255);
+    font-size: 26px;
 }
 </style>

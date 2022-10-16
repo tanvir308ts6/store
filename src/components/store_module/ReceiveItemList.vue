@@ -102,7 +102,7 @@
                                     <div class="row">
                                         <div class="col-md-12" id="submit_items_row">
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button id="submit_items" class="btn btn-primary me-md-2" @click="ReceveList(dataForm)" type="submit">Receive</button>
+                                                <button id="submit_items" class="btn btn-primary me-md-2" @click="ReceveList(dataForm)" data-bs-dismiss="modal" type="submit">Receive</button>
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                                     <!-- <button class="btn btn-primary me-md-2" data-bs-toggle="modal" data-bs-target="#exampleeditModal" type="submit" @click="editItem(itemlLists.id)"><i class="bi bi-pencil"></i></button>
                                     <button class="btn btn-danger me-md-2" type="button" @click="removeitem(itemlLists.id)"><i class="bi bi-trash3"></i></button> -->
                                     <!-- Button trigger viewModal -->
-                                    <button type="button" class="btn btn-primary" @click="getItemDetail(itemReceive?.item_details)" data-bs-toggle="modal" data-bs-target="#examplemodalitemList">
+                                    <button type="button" class="btn" id="item_vue_btn" @click="getItemDetail(itemReceive?.item_details)" data-bs-toggle="modal" data-bs-target="#examplemodalitemList">
                                         View items
                                     </button>
 
@@ -168,13 +168,16 @@
                                                                         <th scope="col">SL</th>
                                                                         <th scope="col">Item Name</th>
                                                                         <th scope="col">Item Code</th>
+                                                                         <th scope="col">Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="itemdetaillists, index in itemDetails" :key="index">
                                                                         <th>{{index+1}}</th>
-                                                                        <td>{{itemdetaillists?.item?.item_name ?? "Not Found"}}</td>
-                                                                        <td>{{itemdetaillists?.item?.item_code?? "Not Found"}}</td>
+                                                                        <td>{{itemdetaillists?.item?.item_name ??"Not Found"}}</td>
+                                                                        <td>{{itemdetaillists?.item?.item_code??"Not Found"}}</td>
+                                                                        <td v-if="itemdetaillists?.item?.item_status == 1">Active</td>
+                                                                        <td v-else>Inactive</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -310,7 +313,16 @@ export default {
     /* padding: 0; */
     padding: 10px;
 }
-
+#item_vue_btn{
+    border: 1px solid rgb(121, 121, 121);
+    background-color: rgb(161, 161, 161);
+    border-radius:0% ;
+}
+#item_vue_btn:hover{
+    background-color: #3F51B5;
+    color: rgb(255, 255, 255);
+    border:none;
+}
 /* Receive item model */
 #main_card {
     border: none;
@@ -449,6 +461,6 @@ export default {
 }
 
 #submit_items_row {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 </style>
