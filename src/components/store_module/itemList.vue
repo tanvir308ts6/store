@@ -150,6 +150,7 @@
                                     <th scope="col">Item Name</th>
                                     <th scope="col">Unit In</th>
                                     <th scope="col">Balance</th>
+                                    <th scope="col">Status</th>
                                     <!-- <th scope="col">Item Status</th> -->
                                     <th scope="col" id="action_col_head">Action</th>
                                 </tr>
@@ -161,9 +162,11 @@
                                     <td id="action_col">{{ itemlLists.item_name }}</td>
                                     <td id="action_col">{{ itemlLists?.unit?.unit_name }}</td>
                                     <td id="action_col">{{ itemlLists?.balance?.balance_quantity ?? "0" }}</td>
+                                    <td id="action_col" v-if="itemlLists?.item_status == 1"><button type="button" id="status"> Active</button></td>
+                                    <td id="action_col" v-else>Inactive</td>
                                     <!-- <td id="action_col">{{ itemlLists?.item_status}}</td> -->
                                     <td id="action_col_btn">
-                                        <button class="btn btn-primary me-md-2" data-bs-toggle="modal" data-bs-target="#exampleeditModal" type="submit" @click="editItem(itemlLists.id)"><i class="bi bi-pencil"></i></button>
+                                        <button id="edit_btn" class="btn btn-primary me-md-2" data-bs-toggle="modal" data-bs-target="#exampleeditModal" type="submit" @click="editItem(itemlLists.id)"><i class="bi bi-pencil"></i></button>
 
                                         <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" data-bs-target="#exampleModalDel">
                                             <i class="bi bi-trash3"></i>
@@ -192,6 +195,23 @@
                         </table>
                     </div>
                 </div>
+                <!-- pagination row -->
+                <div class="row">
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-3" id="pagination_select_col">
+                        <select class="form-select justify-content-md-end" id="pagination_select" aria-label="Default select example">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -236,7 +256,7 @@ export default {
 
         //Get Item Data 
 
-        getItemData() {
+        getItemData(page, limit) {
             fetch(`http://103.4.145.242:8006/api/auth/store-item`)
                 .then((response) => response.json())
                 .then((json) => {
@@ -245,7 +265,6 @@ export default {
         },
 
         // Save Item data
-
         fainalSubmit(item_code, item_name, unit_id, item_status) {
             console.log(item_code, item_name, unit_id, item_status)
             fetch(`http://103.4.145.242:8006/api/auth/store-item`, {
@@ -386,7 +405,7 @@ tbody tr:nth-child(odd) {
 
 .input-group-text p {
     color: #e40a39 !important;
-    background-color: rgb(255, 255, 255) !important;
+    background-color: transparent!important;
 }
 
 #exampleModalLabel {
@@ -400,13 +419,23 @@ tbody tr:nth-child(odd) {
     padding: 0;
     padding-top: 10px;
 }
-
+#status{
+    background-color: #388E3C;
+    color: #fff;
+    height: 30px;
+    font-size: 14px;
+    padding: 0 12px;
+    border-radius: 20px;
+    border: none;
+}
 #action_col_btn {
     text-align: center;
     border: 1px solid #000;
     padding: 5px;
 }
-
+#edit_btn{
+    background-color: #3F51B5;
+}
 #action_col_btn button {
     border: none;
     border-radius: 100%;
@@ -456,5 +485,19 @@ tbody tr:nth-child(odd) {
 #close_icon{
     color: rgb(255, 255, 255);
     font-size: 26px;
+}
+
+/* pagination design */
+#pagination_select_col{
+    position: end;
+}
+#pagination_select{
+    border: none;
+    padding: 0 0 0 10px;
+    width: 60px;
+    margin: auto;
+    border-bottom: 1px solid rgb(94, 94, 94);
+    border-radius: 0%;
+    margin-bottom:10px;
 }
 </style>
